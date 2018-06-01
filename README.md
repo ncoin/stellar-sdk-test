@@ -1,2 +1,4 @@
 # stellar-sdk-test
-stellar sdk test sample code ddd
+stellar sdk test sample code
+
+npm install

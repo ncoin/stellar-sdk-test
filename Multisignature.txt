@@ -1,0 +1,13 @@
+"thresholds": {
+    "low_threshold": 2,
+    "med_threshold": 2,
+    "high_threshold": 2
+  }
+값으로 멀티 시그니처 컨트롤이 가능
+
+- 출금 시에 마스터계정의 sign이 없으면 출금이 되지 않는다.
+- 마스터 계정의 weight 값이 0이면 출금이 되지 않고 상태변경도 되지 않는다.
+
+- Stargazer에서 Shared Account 로 만들면 멀티시그니쳐 어카운트가 생성되고 마스터계정의 weight 값이 0으로 생성된다.
+- Stargazer에서 만든 Shared Account는 Send 버튼이 비활성화 된다.
+
