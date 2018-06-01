@@ -16,7 +16,7 @@ let transaction;
 server.loadAccount(destinationId)
 // If the account is not found, surface a nicer error message for logging.
 	.catch(StellarSdk.NotFoundError, function (error) {
-		throw new Error('The destination account does not exist!');
+		throw new Error('The destination account does not exist!33');
 	})
 	// If there was no error, load up-to-date information on your account.
 	.then(function() {
