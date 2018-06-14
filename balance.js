@@ -1,5 +1,9 @@
 const StellarSdk = require('stellar-sdk');
 
+// HTTP 허용 설정
+// StellarSdk.Config.setAllowHttp(true);
+// console.log("Is allow http:", StellarSdk.Config.isAllowHttp());
+
 const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
 const publicKey = "GBJUL6KZOOMZOI46CURFO4P3FGHJAP4DHZM45G7QMDA4JRYOBLHVKTVT";
