@@ -29,32 +29,32 @@ server.loadAccount(MultiSignerKey_1.publicKey())
 	.then(function(MultiSignerAccount_1) {
 		// Start building the transaction.
 		transaction = new StellarSdk.TransactionBuilder(MultiSignerAccount_1)
-			// .addOperation(StellarSdk.Operation.setOptions({
-			// 	masterWeight: 2,
-			// 	lowThreshold: 2,
-			// 	medThreshold: 2,
-			// 	highThreshold: 2,
-			// 	signer: {
-			// 		ed25519PublicKey: MultiSignerKey_2.publicKey(),
-			// 		weight: 1
-			// 	}
-			// }))
-			// .addOperation(StellarSdk.Operation.setOptions({
-			// 	signer: {
-			// 		ed25519PublicKey: MultiSignerKey_3.publicKey(),
-			// 		weight: 1
-			// 	}
-			// }))
-			// .addOperation(StellarSdk.Operation.setOptions({
-			// 	signer: {
-			// 		ed25519PublicKey: MultiSignerKey_4.publicKey(),
-			// 		weight: 1
-			// 	}
-			// }))
-
 			.addOperation(StellarSdk.Operation.setOptions({
-				masterWeight: 1
+				masterWeight: 2,
+				lowThreshold: 2,
+				medThreshold: 2,
+				highThreshold: 2,
+				signer: {
+					ed25519PublicKey: MultiSignerKey_2.publicKey(),
+					weight: 1
+				}
 			}))
+			.addOperation(StellarSdk.Operation.setOptions({
+				signer: {
+					ed25519PublicKey: MultiSignerKey_3.publicKey(),
+					weight: 1
+				}
+			}))
+			.addOperation(StellarSdk.Operation.setOptions({
+				signer: {
+					ed25519PublicKey: MultiSignerKey_4.publicKey(),
+					weight: 1
+				}
+			}))
+
+			// .addOperation(StellarSdk.Operation.setOptions({
+			// 	masterWeight: 1
+			// }))
 
 			.build();
 

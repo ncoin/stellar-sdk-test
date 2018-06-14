@@ -7,13 +7,11 @@ const Buyer = "SBYL6P3XWV3XPB7Y7NVFCKCGF32IP4WT5YTIIAMTVGVFND53ECVE4TIR";
 
 const Issuer = "SBCJEQRONAQ533FEAUXSYDB373SN5AQEERWLLQ3PXJE4QYPJGEI73TTD";
 const Seller = "SA6PDGIJELKKDOFLSJRMCGA7KE65A6EHNQZXTJEY5TQTGSUH4O3NK2Q3";
-const Loan = "SC6ZEE6RNDJIBU7KN25GDOWZMENLDFXMO7PYB753SXEWNSO4ENAW7DPB";
 
 const BuyerKey = StellarSdk.Keypair.fromSecret(Buyer);
 
 const IssuerKey = StellarSdk.Keypair.fromSecret(Issuer);
 const SellerKey = StellarSdk.Keypair.fromSecret(Seller);
-const LoanKey = StellarSdk.Keypair.fromSecret(Loan);
 
 let transaction;
 
@@ -26,18 +24,15 @@ server.loadAccount(BuyerKey.publicKey())
 	.then(function() {
 		return server.loadAccount(BuyerKey.publicKey());
 	})
-	.then(function(BuyerAccount) {
+	.then(function(account) {
 		let nch100 = new StellarSdk.Asset("NCH100", IssuerKey.publicKey());
 		let amount = 100;
-		let price = 0.301985;
+		let price = 0.401985;
 		let invoice = amount * price;
 
 		// console.log(invoice.toFixed(7));
 
-		transaction = new StellarSdk.TransactionBuilder(BuyerAccount)
-			// .addOperation(StellarSdk.Operation.changeTrust({
-			// 	asset: nch100
-			// }))
+		transaction = new StellarSdk.TransactionBuilder(account)
 
 			// XLM transfer to seller account from buyer account
 			.addOperation(StellarSdk.Operation.payment({
@@ -46,7 +41,7 @@ server.loadAccount(BuyerKey.publicKey())
 				amount: amount.toString()
 			}))
 
-			// transfer NCH100 to seller account from issue account
+			// transfer NCH100 to seller account from issuer account
 			.addOperation(StellarSdk.Operation.payment({
 				destination: SellerKey.publicKey(),
 				asset: nch100,
@@ -61,6 +56,7 @@ server.loadAccount(BuyerKey.publicKey())
 				amount: invoice.toFixed(7),
 				source: SellerKey.publicKey()
 			}))
+
 			.build();
 
 		transaction.sign(BuyerKey);

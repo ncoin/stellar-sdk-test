@@ -3,18 +3,13 @@ StellarSdk.Network.useTestNetwork();
 
 const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
-const Buyer = "SBYL6P3XWV3XPB7Y7NVFCKCGF32IP4WT5YTIIAMTVGVFND53ECVE4TIR";
-// const Buyer = "SDA4VNK7G4AFXLERM6KP42WP2FSX3UH7FMBOWWGPGLEPQ4LAKO4UV5UH";
-
+// const Buyer = "SBYL6P3XWV3XPB7Y7NVFCKCGF32IP4WT5YTIIAMTVGVFND53ECVE4TIR";    // P1
+// const Buyer = "SDA4VNK7G4AFXLERM6KP42WP2FSX3UH7FMBOWWGPGLEPQ4LAKO4UV5UH";    // P2
+const Buyer = "SBWSHHDEQO4GT2FAT32ABJQOBVPLEYUTPYTTLTBIB2SQUM4YPOGZPLCP";    // P3
 const Issuer = "SBCJEQRONAQ533FEAUXSYDB373SN5AQEERWLLQ3PXJE4QYPJGEI73TTD";
-const Seller = "SA6PDGIJELKKDOFLSJRMCGA7KE65A6EHNQZXTJEY5TQTGSUH4O3NK2Q3";
-const Loan = "SC6ZEE6RNDJIBU7KN25GDOWZMENLDFXMO7PYB753SXEWNSO4ENAW7DPB";
 
 const BuyerKey = StellarSdk.Keypair.fromSecret(Buyer);
-
 const IssuerKey = StellarSdk.Keypair.fromSecret(Issuer);
-const SellerKey = StellarSdk.Keypair.fromSecret(Seller);
-const LoanKey = StellarSdk.Keypair.fromSecret(Loan);
 
 let transaction;
 
@@ -29,28 +24,16 @@ server.loadAccount(BuyerKey.publicKey())
 	})
 	.then(function(account) {
 		let nch100 = new StellarSdk.Asset("NCH100", IssuerKey.publicKey());
-		let amount = 100;
-		let price = 0.351985;
-		let invoice = amount * price;
 
+		// change trust
 		transaction = new StellarSdk.TransactionBuilder(account)
-			// .addOperation(StellarSdk.Operation.changeTrust({
-			// 	asset: nch100
-			// }))
-			// .addOperation(StellarSdk.Operation.changeTrust({
-			// 	asset: nch100,
-			// 	source: LoanKey.publicKey()
-			// }))
-			.addOperation(StellarSdk.Operation.createPassiveOffer({
-				selling: StellarSdk.Asset.native(),
-				buying: nch100,
-				amount: amount.toString(),
-				price: price
+			.addOperation(StellarSdk.Operation.changeTrust({
+				asset: nch100
 			}))
+
 			.build();
 
 		transaction.sign(BuyerKey);
-		// transaction.sign(LoanKey);
 
 		return server.submitTransaction(transaction);
 	})
