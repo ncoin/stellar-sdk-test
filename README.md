@@ -5,7 +5,7 @@ stellar sdk test sample code
 npm install
 ```
 
-HTTP 허용 설정
+HTTP 허용 설정 (Javascript SDK)
 ```
 StellarSdk.Config.setAllowHttp(true);
 console.log("Is allow http:", StellarSdk.Config.isAllowHttp());
