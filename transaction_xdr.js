@@ -14,6 +14,12 @@ let transaction = new StellarSdk.Transaction(xdr);
 
 transaction.sign(sourceKey);
 
+console.log(transaction.toEnvelope().toXDR('base64'));
+
+// let xdr2 = transaction.toXDR();
+//
+// console.log(xdr2);
+
 server.submitTransaction(transaction)
 	.then(function(result) {
 		console.log('Success! Results:', result);
