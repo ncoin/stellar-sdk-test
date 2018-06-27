@@ -6,13 +6,11 @@ const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 const Issuer = "SBCJEQRONAQ533FEAUXSYDB373SN5AQEERWLLQ3PXJE4QYPJGEI73TTD";
 const Seller = "SC73E2XZDZBEELX2GW7565LB5SKSYXWWSIXRSO6NYD2ELVN5ZVLNR3YN";
 const Buyer = "SDA4VNK7G4AFXLERM6KP42WP2FSX3UH7FMBOWWGPGLEPQ4LAKO4UV5UH";
-const Distribution = "SC73E2XZDZBEELX2GW7565LB5SKSYXWWSIXRSO6NYD2ELVN5ZVLNR3YN";
-
 
 const IssuerKey = StellarSdk.Keypair.fromSecret(Issuer);
 const SellerKey = StellarSdk.Keypair.fromSecret(Seller);
 const BuyerKey = StellarSdk.Keypair.fromSecret(Buyer);
-const DistributionKey = StellarSdk.Keypair.fromSecret(Distribution);
+
 let transaction;
 
 // the JS SDK uses promises for most actions, such as retrieving an account
@@ -25,7 +23,7 @@ server.loadAccount(BuyerKey.publicKey())
 		return server.loadAccount(BuyerKey.publicKey());
 	})
 	.then(function(BuyerAccount) {
-		let eth = new StellarSdk.Asset("ETH",  IssuerKey.publicKey());
+		let NCH = new StellarSdk.Asset("ETH", "GA2DKVSPTZVC4JUFJBXNUPRR6WONWK4RVH7KHYD6P7WB6D4J2WRK3BGH");
 
 		transaction = new StellarSdk.TransactionBuilder(BuyerAccount)
 			.addOperation(StellarSdk.Operation.changeTrust({
@@ -37,23 +35,6 @@ server.loadAccount(BuyerKey.publicKey())
 
 		return server.submitTransaction(transaction);
 	})
-	.then(function() {
-		return server.loadAccount(DistributionKey.publicKey());
-	})
-	.then(function(DistributionAccount) {
-		let eth = new StellarSdk.Asset("ETH",  IssuerKey.publicKey());
-
-		transaction = new StellarSdk.TransactionBuilder(DistributionAccount)
-			.addOperation(StellarSdk.Operation.changeTrust({
-				asset: eth
-			}))
-			.build();
-
-		transaction.sign(DistributionKey);
-
-		return server.submitTransaction(transaction);
-	})
-
 	.then(function(result) {
 		console.log('Success! Results:', result);
 	})
