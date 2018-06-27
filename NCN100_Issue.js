@@ -27,7 +27,7 @@ server.loadAccount(IssuerKey.publicKey())
 			.addOperation(StellarSdk.Operation.payment({
 				destination: DistributionKey.publicKey(),
 				asset: asset,
-				amount: "1000000000"
+				amount: "10"
 			}))
 			.build();
 
