@@ -1,5 +1,5 @@
 # stellar-sdk-test
-stellar sdk test sample code
+stellar sdk test sample codes
 
 ```
 npm install
