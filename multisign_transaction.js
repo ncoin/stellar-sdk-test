@@ -3,17 +3,15 @@ StellarSdk.Network.useTestNetwork();
 
 const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
-const SecretMultiSigner_1 = "SD37NEGIC5SM64F2MH5FVILRT3IWEUZBVMPKHRLIDNORVHGZUVXYXXRL";
-const SecretMultiSigner_2 = "SBWBGBPVOWM7ZHWR6GGW7MPKA6SX73E4RF6KHT3YWOLP45R6UMMAEYMQ";
-const SecretMultiSigner_3 = "SBWZHGTZ4V7L2LGQUMSNNQWEQ3OOACAMRX2H3DFOWF2OSLZKCECVLTCI";
-const SecretMultiSigner_4 = "SDKV6VA56I6LT6H73LCKX3VHT7P7F77C7BNCGEXJMTSFE4HWS7YMD7HP";
+const SecretMaster = "SDMQBBJQW5XE4H5JTQLRTDDLLL6FLYBYSASW2S36ZA6BZY5CDA2QW5SP";
+const SecretSignerA = "SAAETUPOTOAQ742JKW4ZSLVGTKEPF22IABSLXY7GQI7ESSPLFXGZBBJA";
+const SecretSignerB = "SBZSJTHBGG4Q7CD73POQX6A2TZHFHKOYJQXOWZV63GBT3R5VJYFNUGTP";
+
+const KeyMaster = StellarSdk.Keypair.fromSecret(SecretMaster);
+const KeySignerA = StellarSdk.Keypair.fromSecret(SecretSignerA);
+const KeySignerB = StellarSdk.Keypair.fromSecret(SecretSignerB);
 
 const DestinationId = "GCHRU5YXGXTMTO35PDZRVG45NQ6W6ANUQYJZNCL7PP4M3E25ADCQFZF6";
-
-const MultiSignerKey_1 = StellarSdk.Keypair.fromSecret(SecretMultiSigner_1);
-const MultiSignerKey_2 = StellarSdk.Keypair.fromSecret(SecretMultiSigner_2);
-const MultiSignerKey_3 = StellarSdk.Keypair.fromSecret(SecretMultiSigner_3);
-const MultiSignerKey_4 = StellarSdk.Keypair.fromSecret(SecretMultiSigner_4);
 
 let transaction;
 
@@ -24,11 +22,11 @@ server.loadAccount(DestinationId)
 	})
 	// If there was no error, load up-to-date information on your account.
 	.then(function() {
-		return server.loadAccount(MultiSignerKey_1.publicKey());
+		return server.loadAccount(KeyMaster.publicKey());
 	})
-	.then(function(sourceAccount) {
+	.then(function(Account) {
 		// Start building the transaction.
-		transaction = new StellarSdk.TransactionBuilder(sourceAccount)
+		transaction = new StellarSdk.TransactionBuilder(Account)
 			.addOperation(StellarSdk.Operation.payment({
 				destination: DestinationId,
 				asset: StellarSdk.Asset.native(),
@@ -39,10 +37,9 @@ server.loadAccount(DestinationId)
 			.addMemo(StellarSdk.Memo.text('Multi Sign Test Transaction'))
 			.build();
 		// Sign the transaction to prove you are actually the person sending it.
-		transaction.sign(MultiSignerKey_1);
-		transaction.sign(MultiSignerKey_2);
-		transaction.sign(MultiSignerKey_3);
-		transaction.sign(MultiSignerKey_4);
+		transaction.sign(KeyMaster);
+		transaction.sign(KeySignerA);
+		transaction.sign(KeySignerB);
 
 		return server.submitTransaction(transaction);
 	})

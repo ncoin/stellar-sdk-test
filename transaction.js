@@ -1,10 +1,11 @@
-const from_secret = "SBYL6P3XWV3XPB7Y7NVFCKCGF32IP4WT5YTIIAMTVGVFND53ECVE4TIR";
-const to_public = "GDD2G2ZB5CJDCI4BW2VVPZ3EULG3YIEEO7MMJMC47WBAVQ5FYXU2WOOM";
+const from_secret = "SDZ3M2C4LIHYZLWFAF4DXBVIXOSTKYRXRR56QIPBHRANF6LDRFE7USMK";
+const to_public = "GC7G4ACHR7BCQVMRLFFFOEMKJVSBZHKUUGFGOSIZGL5WQRYKAJLFQYAC";
 
 const StellarSdk = require('stellar-sdk');
+StellarSdk.Config.setAllowHttp(true);
 StellarSdk.Network.useTestNetwork();
 
-const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
+const server = new StellarSdk.Server('http://192.168.5.231:8000');
 const sourceKeys = StellarSdk.Keypair.fromSecret(from_secret);
 const destinationId = to_public;
 // Transaction will hold a built transaction we can resubmit if the result is unknown.
@@ -30,7 +31,7 @@ server.loadAccount(destinationId)
 				// Because Stellar allows transaction in many currencies, you must
 				// specify the asset type. The special "native" asset represents Lumens.
 				asset: StellarSdk.Asset.native(),
-				amount: "10"
+				amount: "20000"
 			}))
 			// A memo allows you to add your own metadata to a transaction. It's
 			// optional and does not affect how Stellar treats the transaction.

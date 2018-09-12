@@ -1,13 +1,28 @@
-const StellarSdk = require('stellar-sdk');
-StellarSdk.Network.useTestNetwork();
+// const StellarSdk = require('stellar-sdk');
+// StellarSdk.Network.useTestNetwork();
 
 // HTTP 허용 설정
 // StellarSdk.Config.setAllowHttp(true);
 // console.log("Is allow http:", StellarSdk.Config.isAllowHttp());
 
-const server = new StellarSdk.Server('https://nstellar-test.ncoin.com');
+// const server = new StellarSdk.Server('https://nstellar-test.ncoin.com');
 
-const Buyer = "SCX4VXACC7CBIQ23DVRRCDTRLY2QQRWBIOLVZVPXX654COLLI3AQZOMN";    // P6
+
+// const from_secret = "SDZ3M2C4LIHYZLWFAF4DXBVIXOSTKYRXRR56QIPBHRANF6LDRFE7USMK";
+// const to_public = "GC7G4ACHR7BCQVMRLFFFOEMKJVSBZHKUUGFGOSIZGL5WQRYKAJLFQYAC";
+//
+// const StellarSdk = require('stellar-sdk');
+// StellarSdk.Config.setAllowHttp(true);
+// StellarSdk.Network.useTestNetwork();
+//
+// const server = new StellarSdk.Server('http://192.168.5.231:8000');
+
+const StellarSdk = require('stellar-sdk');
+StellarSdk.Network.useTestNetwork();
+
+const server = new StellarSdk.Server('https://nstellar.dev.ncoin.com');
+
+const Buyer = "SDZ3M2C4LIHYZLWFAF4DXBVIXOSTKYRXRR56QIPBHRANF6LDRFE7USMK";    // P6
 
 const BuyerKey = StellarSdk.Keypair.fromSecret(Buyer);
 
